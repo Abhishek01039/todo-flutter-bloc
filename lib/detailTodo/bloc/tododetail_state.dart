@@ -16,5 +16,5 @@ class TododetailLoadedState extends TododetailState {
 
 class TodoDetailError extends TododetailState {
   @override
-  List<Object> get props => throw UnimplementedError();
+  List<Object> get props => [];
 }
