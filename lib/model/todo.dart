@@ -4,7 +4,7 @@ part 'todo.g.dart';
 
 @JsonSerializable(nullable: false)
 class Todo extends Equatable {
-  final bool complete;
+  bool complete;
   final String id;
   final String note;
   final String task;

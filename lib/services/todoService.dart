@@ -11,7 +11,8 @@ class TodoServices {
     await docReference.setData({
       "title": todo.note,
       "desc": todo.task,
-      "complete": false
+      "complete": false,
+      "id": docReference.documentID,
     }).then((value) {
       print('hop ${docReference.documentID}');
       return docReference.documentID;
@@ -20,5 +21,11 @@ class TodoServices {
     }).whenComplete(() {});
     return docReference.documentID;
     // print(data);
+  }
+
+  Future<void> deleteData(String id) async {
+    DocumentReference docReference =
+        _firestore.collection("Todos").document(id);
+    await docReference.delete();
   }
 }

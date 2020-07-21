@@ -4,11 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todolist/addTodo.dart';
 import 'package:todolist/bloc/todos_bloc.dart';
 import 'package:todolist/blocObserver.dart';
+import 'package:todolist/detailTodo/bloc/tododetail_bloc.dart';
+import 'package:todolist/detailTodo/screens/todoDetail.dart';
+import 'package:todolist/locator.dart';
 import 'package:todolist/model/todo.dart';
+import 'package:todolist/services/todoService.dart';
 
 void main() {
   Bloc.observer = SimpleBlocObserver();
-
+  setup();
   runApp(
     BlocProvider<TodosBloc>(
       create: (_) => TodosBloc()..add(TodosLoading()),
@@ -56,6 +60,8 @@ class MyHomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          // BlocProvider.of<TododetailBloc>(context)
+          //     .add(TododetailLoadingEvent());
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -81,7 +87,7 @@ class MyHomePage extends StatelessWidget {
             return ListView.builder(
               padding: EdgeInsets.all(10.0),
               itemBuilder: (context, index) {
-                print(snapshot.data.documents[index].data);
+                // print(snapshot.data.documents[index].data);
                 return TodoCard(
                   todo: Todo.fromJson(
                     snapshot.data.documents[index].data,
@@ -97,20 +103,101 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class TodoCard extends StatelessWidget {
+class TodoCard extends StatefulWidget {
   final Todo todo;
 
   const TodoCard({Key key, this.todo}) : super(key: key);
+
+  @override
+  _TodoCardState createState() => _TodoCardState();
+}
+
+class _TodoCardState extends State<TodoCard> {
+  final TodoServices _todoServices = locator<TodoServices>();
+  showDialogBox() {
+    return showDialog(
+      context: context,
+      child: AlertDialog(
+        title: Text("Are you want to delete the data ? "),
+        // content: ,
+        actions: [
+          RaisedButton(
+            onPressed: () {
+              _todoServices.deleteData(widget.todo.id).then((value) {
+                Navigator.pop(context);
+              });
+            },
+            child: Text("Yes"),
+          ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("No"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 10,
       child: Container(
         child: ListTile(
-          title: Text(todo.note.toString()),
+          leading: Checkbox(
+            value: widget.todo.complete,
+            onChanged: (value) {
+              setState(() {
+                widget.todo.complete = value;
+              });
+            },
+          ),
+          title: Container(
+            child: Text(
+              widget.todo.note.toString(),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
           subtitle: Text(
-            todo.task.toString(),
+            widget.todo.task.toString(),
             overflow: TextOverflow.ellipsis,
+          ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => TodoDetail(
+                  todo: widget.todo,
+                ),
+              ),
+            );
+          },
+          trailing: Container(
+            width: 100,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.edit,
+                  ),
+                  onPressed: () {},
+                ),
+                // SizedBox(
+                //   width: 5,
+                // ),
+                IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.red,
+                  ),
+                  onPressed: () {
+                    showDialogBox();
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
