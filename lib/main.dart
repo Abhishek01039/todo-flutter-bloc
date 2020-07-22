@@ -156,12 +156,12 @@ class _TodoCardState extends State<TodoCard> {
           ),
           title: Container(
             child: Text(
-              widget.todo.note.toString(),
+              widget.todo.title.toString(),
               overflow: TextOverflow.ellipsis,
             ),
           ),
           subtitle: Text(
-            widget.todo.task.toString(),
+            widget.todo.desc.toString(),
             overflow: TextOverflow.ellipsis,
           ),
           onTap: () {

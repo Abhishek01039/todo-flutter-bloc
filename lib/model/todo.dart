@@ -6,13 +6,13 @@ part 'todo.g.dart';
 class Todo extends Equatable {
   bool complete;
   final String id;
-  final String note;
-  final String task;
+  final String title;
+  final String desc;
 
   Todo({
-    this.task,
+    this.title,
     this.complete = false,
-    this.note = '',
+    this.desc,
     this.id,
   });
 
@@ -20,8 +20,8 @@ class Todo extends Equatable {
   List<Object> get props => [
         complete,
         id,
-        note,
-        task,
+        title,
+        desc,
       ];
 
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);

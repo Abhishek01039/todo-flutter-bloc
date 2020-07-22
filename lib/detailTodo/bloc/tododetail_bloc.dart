@@ -24,9 +24,6 @@ class TododetailBloc extends Bloc<TododetailEvent, TododetailState> {
   Stream<TododetailState> _mapLoadingToLoaded() async* {
     yield TododetailInitial();
     try {
-      Future.delayed(
-        Duration(seconds: 3),
-      );
       yield TododetailLoadedState();
     } catch (e) {
       yield TodoDetailError();

@@ -58,15 +58,15 @@ class AddTodoForm extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         onPressed: () {
-                          BlocProvider.of<TodosBloc>(context).add(
-                            TodoAdded(
-                              todo: Todo(
-                                complete: false,
-                                note: _descController.text,
-                                task: _titleController.text,
-                              ),
-                            ),
-                          );
+                          context.bloc<TodosBloc>().add(
+                                TodoAdded(
+                                  todo: Todo(
+                                    complete: false,
+                                    desc: _descController.text,
+                                    title: _titleController.text,
+                                  ),
+                                ),
+                              );
                         },
                         child: Text("Submit"),
                       ),

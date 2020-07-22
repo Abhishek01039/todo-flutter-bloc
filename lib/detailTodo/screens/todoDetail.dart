@@ -39,7 +39,7 @@ class TodoDetail extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          todo.note.toString(),
+                          todo.title.toString(),
                         ),
                       ],
                     ),
@@ -53,7 +53,7 @@ class TodoDetail extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          todo.task.toString(),
+                          todo.desc.toString(),
                         ),
                       ],
                     ),

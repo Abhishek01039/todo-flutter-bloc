@@ -9,8 +9,8 @@ class TodoServices {
   Future<String> insertData(Todo todo) async {
     DocumentReference docReference = _firestore.collection("Todos").document();
     await docReference.setData({
-      "title": todo.note,
-      "desc": todo.task,
+      "title": todo.title,
+      "desc": todo.desc,
       "complete": false,
       "id": docReference.documentID,
     }).then((value) {
@@ -28,4 +28,6 @@ class TodoServices {
         _firestore.collection("Todos").document(id);
     await docReference.delete();
   }
+
+  updateComplete() async {}
 }

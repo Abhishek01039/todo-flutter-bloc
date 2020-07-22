@@ -8,9 +8,9 @@ part of 'todo.dart';
 
 Todo _$TodoFromJson(Map<String, dynamic> json) {
   return Todo(
-    task: json['title'] as String,
+    title: json['title'] as String,
     complete: json['complete'] as bool,
-    note: json['desc'] as String ?? "",
+    desc: json['desc'] as String ?? "",
     id: json['id'] as String,
   );
 }
@@ -18,6 +18,6 @@ Todo _$TodoFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$TodoToJson(Todo instance) => <String, dynamic>{
       'complete': instance.complete,
       'id': instance.id,
-      'note': instance.note,
-      'task': instance.task,
+      'title': instance.title,
+      'desc': instance.desc,
     };
